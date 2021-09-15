@@ -16,13 +16,14 @@ export function User({ person }) {
       onClick={() => {isHidden ? setHide(false) : setHide(true);
         buttonText ? setButtonText("Hide Details") : setButtonText("Show Details");
       }}>
-        {buttonText
+        {buttonText ? "Show Details" : "Hide Details"
         }</button>
       {isHidden ?
       <div></div> :
       <div>
         <p>Age: {person.dob.age}</p>
         <p>Gender: {person.gender}</p>
+        <p>Phone: {person.phone}</p>
       </div>
       }
     </li>
