@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Users } from "./Users";
+import { User } from "./User";
+console.clear()
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const URL = "https://randomuser.me/api?results=25"
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      users: [],
+      isHidden: true,
+      buttonText: "Show Details"
+    };
+  }
+
+  // handleClick = () => {
+  //   let buttonText = this.state.buttonText == "Show Details" ? "Hide Details" : "Show Details"
+  //   let status = this.state.isHidden === true ? false : true
+
+  //   this.setState({
+  //     isHidden: status,
+  //     buttonText: buttonText
+  //   })
+  // }
+
+
+  async componentDidMount() {
+    let response = await fetch(URL);
+    let json = await response.json();
+    let { results } = json;
+    
+    this.setState({
+      users: results
+  });
 }
 
-export default App;
+componentDidUpdate() {
+  console.log("Updated", this.state.users);
+}
+
+  render() {
+    
+    return (
+      <div className="App">
+        <Users people={this.state.users} isHidden={this.state.isHidden} />
+      </div>
+
+    );
+  }
+}
